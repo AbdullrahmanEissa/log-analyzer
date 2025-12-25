@@ -2,7 +2,7 @@
 
 A **production-ready full-stack log analysis application** that helps developers and DevOps teams quickly understand what’s happening inside their systems by summarizing **Errors, Warnings, and Info logs** in seconds.
 
-Built with **Node.js**, **React**, **Docker**, and **Ansible**, and designed with real-world deployment in mind.
+Built with **Node.js**, **React**, **Docker**, and **Ansible**, and designed for **real-world deployment**.
 
 ---
 
@@ -18,6 +18,24 @@ Manually scanning them is **time-consuming, error-prone, and inefficient**.
 * Providing instant insights instead of raw noise
 
 This project focuses on **clarity, speed, and deployability**, not just code.
+
+---
+
+## ⚠️ Known Deployment Consideration
+
+> When running locally inside Docker, containers communicate using **service names** (e.g., `backend:5000`).
+> But browsers outside Docker **cannot resolve container names**.
+
+**Solution:**
+
+* Use the **host/server IP** in the frontend environment variable (`VITE_API_URL`) to ensure the frontend can reach the backend from any browser in your network.
+* Example `.env`:
+
+```env
+VITE_API_URL=http://192.168.1.5:5000
+```
+
+* This ensures the app works **anywhere**, whether at home, in the office, or on cloud servers.
 
 ---
 
@@ -131,7 +149,8 @@ docker compose up --build
 * Frontend: [http://localhost:5173](http://localhost:5173)
 * Backend: [http://localhost:5000](http://localhost:5000)
 
-Containers communicate internally via Docker network using service names.
+> ⚠️ **Important:** In browsers, the frontend must use the **server IP** to reach the backend (`VITE_API_URL=http://<server-ip>:5000`).
+> Containers talk via service names (`backend`) **inside Docker**, but this does not work from host/browser.
 
 ---
 
